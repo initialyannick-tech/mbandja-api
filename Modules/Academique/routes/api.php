@@ -8,9 +8,6 @@ use Modules\Academique\Http\Controllers\SemestreController;
 use Modules\Academique\Http\Controllers\SessionController;
 use Modules\Academique\Http\Controllers\UniteController;
 
-
-
-
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('sessions')->group(function() {

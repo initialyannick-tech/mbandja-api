@@ -1,5 +1,6 @@
 {
     "Core": true,
     "Admin": true,
-    "Academique": true
+    "Academique": true,
+    "Etudiant": true
 }

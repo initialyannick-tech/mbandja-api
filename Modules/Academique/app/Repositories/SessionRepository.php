@@ -8,7 +8,6 @@ use Modules\Academique\Transformers\SessionRessource;
 
 class SessionRepository
 {
-    
     /**
      * Liste des sessions sans pagination
      *
