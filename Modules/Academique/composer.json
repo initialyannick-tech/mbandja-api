@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/academique",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Academique\\": "app/",
+            "Modules\\Academique\\Database\\Factories\\": "database/factories/",
+            "Modules\\Academique\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Academique\\Tests\\": "tests/"
+        }
+    }
+}
