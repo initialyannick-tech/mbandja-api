@@ -13,7 +13,7 @@ class Classe extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['code', 'libelle','capacite','cycle_id','session_id'];
+    protected $fillable = ['code', 'libelle','capacite','cycle_id','session_id', 'frais_inscription'];
 
 
     protected static function boot()

@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('classes', function (Blueprint $table) {
+        Schema::create('inscriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->string('libelle');
-            $table->string('capacite')->nullable();
+            $table->foreignId('classe_id')->constrained('classes');
+            $table->foreignId('etudiant_id')->constrained('etudiants');
             $table->foreignId('session_id')->constrained('sessions');
-            $table->foreignId('cycle_id')->constrained('cycles');
-            $table->decimal('frais_inscription', 12, 2)->default(0);
+            $table->date('date_inscription');
+            $table->enum('statut_paiement', ['impaye','partiel','solde'])->default('impaye');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('classes');
+        Schema::dropIfExists('inscriptions');
     }
 };
