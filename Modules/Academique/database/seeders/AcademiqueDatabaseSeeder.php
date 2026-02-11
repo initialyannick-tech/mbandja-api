@@ -11,6 +11,14 @@ class AcademiqueDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+         $this->call([
+            SessionSeeder::class,
+            SemestreSeeder::class,
+            CycleSeeder::class,
+            ClasseSeeder::class,
+            ClasseHasSemestreSeeder::class,
+            UniteSeeder::class,
+            MatiereSeeder::class,
+         ]);
     }
 }

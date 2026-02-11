@@ -23,6 +23,17 @@ class UserSeeder extends Seeder
             ],
         );
 
+        $users = array(
+            [
+                "nom" => "ASSEMBE",
+                "prenom" => "Vinny",
+                "email" => "vinny.assembe@mbandja.com ",
+                "password" => "azerty",
+                "password_changed" => "active",
+                "role_id" => 1,
+            ],
+        );
+
 
         foreach ($users as $user) {
             User::create($user); // Cela déclenchera l'événement `creating`
