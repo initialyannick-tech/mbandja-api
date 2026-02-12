@@ -24,7 +24,8 @@ class EtudiantResource extends JsonResource
             "email"      => $this->email,
             "adresse"    => $this->adresse, 
             "documents"  => $this->documents,
-            "contacts"   => $this->contacts
+            "contacts"   => $this->contacts,
+            "inscriptions" => $this->inscriptions
         ];
 
     }

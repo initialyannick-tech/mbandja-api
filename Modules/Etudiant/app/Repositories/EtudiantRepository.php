@@ -42,7 +42,7 @@ class EtudiantRepository
      */
     public function paginate(): AnonymousResourceCollection
     {
-        $etudiants = Etudiant::orderBy('id', 'desc')->paginate(10);
+        $etudiants = Etudiant::with('inscriptions.classe')->orderBy('id', 'desc')->paginate(10);
         return EtudiantResource::collection($etudiants);
     }
 

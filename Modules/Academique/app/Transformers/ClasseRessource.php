@@ -19,6 +19,7 @@ class ClasseRessource extends JsonResource
             'capacite' => $this->capacite,
             'session'  => $this->session,
             'cycle'    => $this->cycle,
+            'frais_inscription' => $this->frais_inscription
         ];
     }
 }

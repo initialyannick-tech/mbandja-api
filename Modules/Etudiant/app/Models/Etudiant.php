@@ -53,4 +53,9 @@ class Etudiant extends Model
         return $this->hasMany(Document::class);
     }
 
+     public function inscriptions()
+    {
+        return $this->hasMany(Inscription::class, 'etudiant_id');
+    }
+
 }

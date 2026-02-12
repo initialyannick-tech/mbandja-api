@@ -12,6 +12,16 @@ class InscriptionResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'classe' => $this->classe,
+            'etudiant' => $this->etudiant,
+            'session' => $this->session,
+            'date_inscription' => $this->date_inscription,
+            'statut_paiement' => $this->statut_paiement,
+            'paiements' => $this->paiements,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
     }
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('session_id')->constrained('sessions');
             $table->date('date_inscription');
             $table->enum('statut_paiement', ['impaye','partiel','solde'])->default('impaye');
+            $table->unique(['etudiant_id', 'session_id', 'classe_id']);
             $table->timestamps();
         });
     }

@@ -38,12 +38,17 @@ class Paiement extends Model
     protected static function booted()
     {
         static::created(function ($paiement) {
-            $paiement->inscription->mettreAJourStatut();
+            if ($paiement->inscription) {
+                $paiement->inscription->mettreAJourStatut();
+            }
         });
 
         static::deleted(function ($paiement) {
-            $paiement->inscription->mettreAJourStatut();
+            if ($paiement->inscription) {
+                $paiement->inscription->mettreAJourStatut();
+            }
         });
     }
+
     
 }

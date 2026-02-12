@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Modules\Etudiant\Http\Controllers\ContactController;
 use Modules\Etudiant\Http\Controllers\DocumentController;
 use Modules\Etudiant\Http\Controllers\EtudiantController;
-
-
+use Modules\Etudiant\Http\Controllers\InscriptionController;
+use Modules\Etudiant\Http\Controllers\PaiementController;
+use Modules\Etudiant\Http\Controllers\PayementController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -37,5 +38,24 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/{document}', [DocumentController::class, 'show'])->name('documents.show');
         Route::put('/{document}', [DocumentController::class, 'update'])->name('documents.update');
         Route::delete('/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy');
+    });
+    Route::prefix('inscription')->group(function() {
+        Route::post('/', [InscriptionController::class, 'store'])->name('inscriptions.store');
+        Route::get('search/{keyword}', [InscriptionController::class, 'search'])->name('inscriptions.search');
+        Route::get('/', [InscriptionController::class, 'index'])->name('inscriptions.index');
+        Route::get('/liste', [InscriptionController::class, 'list'])->name('inscriptions.liste');
+        Route::get('/{inscription}', [InscriptionController::class, 'show'])->name('inscriptions.show');
+        Route::put('/{inscription}', [InscriptionController::class, 'update'])->name('inscriptions.update');
+        Route::delete('/{inscription}', [InscriptionController::class, 'destroy'])->name('inscriptions.destroy');
+    });
+
+     Route::prefix('paiement')->group(function() {
+        Route::post('/', [PaiementController::class, 'store'])->name('paiements.store');
+        Route::get('search/{keyword}', [PaiementController::class, 'search'])->name('paiements.search');
+        Route::get('/', [PaiementController::class, 'index'])->name('paiements.index');
+        Route::get('/liste', [PaiementController::class, 'list'])->name('paiements.liste');
+        Route::get('/{paiement}', [PaiementController::class, 'show'])->name('paiements.show');
+        Route::put('/{paiement}', [PaiementController::class, 'update'])->name('paiements.update');
+        Route::delete('/{paiement}', [PaiementController::class, 'destroy'])->name('paiements.destroy');
     });
 });

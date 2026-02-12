@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payements', function (Blueprint $table) {
+        Schema::create('paiements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('inscription_id')->constrained('inscriptions');
             $table->decimal('montant', 12, 2)->default(0);
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payements');
+        Schema::dropIfExists('paiements');
     }
 };

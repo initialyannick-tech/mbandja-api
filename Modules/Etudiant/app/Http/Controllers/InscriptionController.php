@@ -2,55 +2,57 @@
 
 namespace Modules\Etudiant\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
-class InscriptionController extends Controller
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Modules\Core\Http\Controllers\CoreController;
+use Modules\Etudiant\Http\Requests\InscriptionRequest;
+use Modules\Etudiant\Repositories\InscriptionRepository;
+
+class InscriptionController extends CoreController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    protected $repository;
+
+    public function __construct(InscriptionRepository $repository)
     {
-        return view('etudiant::index');
+        $this->repository = $repository;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Liste inscriptions sans pagination
+     *
+     * @return AnonymousResourceCollection
      */
-    public function create()
-    {
-        return view('etudiant::create');
+    public function list() {
+        return $this->repository->index();
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Liste des inscriptions
+     *
+     * @return AnonymousResourceCollection
      */
-    public function store(Request $request) {}
-
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
+    public function index(): AnonymousResourceCollection
     {
-        return view('etudiant::show');
+        return $this->repository->paginate();
     }
 
+
     /**
-     * Show the form for editing the specified resource.
+     * Création d'une inscription
+     *
+     * @param InscriptionRequest  $request
+     * @return JsonResponse
      */
-    public function edit($id)
+    public function store(InscriptionRequest  $request): JsonResponse
     {
-        return view('etudiant::edit');
+        $data = $request->validated();
+        $inscription  = $this->repository->store($data);
+        if(!$inscription ){
+            return $this->returnError("L'étudiant est déjà inscrit pour cette session.");
+        } else {
+            return $this->returnSuccess('Inscription créé avec succès', $inscription );
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id) {}
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id) {}
 }

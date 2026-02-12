@@ -21,9 +21,6 @@ class UserSeeder extends Seeder
                 "password_changed" => "active",
                 "role_id" => 1,
             ],
-        );
-
-        $users = array(
             [
                 "nom" => "ASSEMBE",
                 "prenom" => "Vinny",

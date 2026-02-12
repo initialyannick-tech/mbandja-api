@@ -35,7 +35,7 @@ class Inscription extends Model
 
     public function classe()
     {
-        return $this->belongsTo(Classe::class);
+        return $this->belongsTo(Classe::class, 'classe_id');
     }
 
     public function session()
@@ -67,16 +67,22 @@ class Inscription extends Model
 
     public function mettreAJourStatut()
     {
-        if ($this->total_paye <= 0) {
-            $this->statut_paiement = 'impaye';
-        } elseif ($this->total_paye < $this->montant_total) {
-            $this->statut_paiement = 'partiel';
+        $totalPaye = $this->paiements()->sum('montant');
+        $montantTotal = $this->classe->frais_inscription ?? 0;
+
+        if ($totalPaye <= 0) {
+            $nouveauStatut = 'impaye';
+        } elseif ($totalPaye < $montantTotal) {
+            $nouveauStatut = 'partiel';
         } else {
-            $this->statut_paiement = 'solde';
+            $nouveauStatut = 'solde';
         }
 
-        $this->save();
+        if ($this->statut_paiement !== $nouveauStatut) {
+            $this->update(['statut_paiement' => $nouveauStatut]);
+        }
     }
+
 
     
 }
