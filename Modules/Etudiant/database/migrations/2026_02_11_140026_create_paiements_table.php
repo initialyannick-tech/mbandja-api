@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('paiements', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('inscription_id')->constrained('inscriptions');
+            $table->string('numero_recu')->unique();
+            $table->foreignId('inscription_id') ->constrained('inscriptions') ->cascadeOnDelete();
             $table->decimal('montant', 12, 2)->default(0);
             $table->date('date_paiement');
             $table->string('mode_paiement')->nullable();

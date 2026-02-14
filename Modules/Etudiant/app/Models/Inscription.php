@@ -26,6 +26,12 @@ class Inscription extends Model
         'date_inscription' => 'date'
     ];
 
+    protected $appends = [
+        'total_paye',
+        'montant_total',
+        'reste_a_payer'
+    ];
+
     /* ================= RELATIONS ================= */
 
     public function etudiant()
@@ -65,10 +71,19 @@ class Inscription extends Model
         return $this->montant_total - $this->total_paye;
     }
 
-    public function mettreAJourStatut()
+    public function getResteAPayerAttribute(): float
     {
-        $totalPaye = $this->paiements()->sum('montant');
-        $montantTotal = $this->classe->frais_inscription ?? 0;
+        return max(0, $this->montant_total - $this->total_paye);
+    }
+
+    /* ================= LOGIQUE STATUT ================= */
+
+    public function mettreAJourStatut(): void
+    {
+        $this->loadMissing('classe');
+
+        $totalPaye = $this->total_paye;
+        $montantTotal = $this->montant_total;
 
         if ($totalPaye <= 0) {
             $nouveauStatut = 'impaye';
@@ -79,7 +94,8 @@ class Inscription extends Model
         }
 
         if ($this->statut_paiement !== $nouveauStatut) {
-            $this->update(['statut_paiement' => $nouveauStatut]);
+            $this->statut_paiement = $nouveauStatut;
+            $this->save();
         }
     }
 

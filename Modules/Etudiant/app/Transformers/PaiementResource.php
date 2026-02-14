@@ -14,11 +14,13 @@ class PaiementResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'numero_recu'=> $this->numero_recu,
             'montant' => (float) $this->montant,
             'date_paiement' => $this->date_paiement,
             'mode_paiement' => $this->mode_paiement,
             'reference' => $this->reference,
-            'inscription' => $this->inscription,
+            'inscription' => $this->inscription, 
+            'etudiant' => $this->etudiant,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ];

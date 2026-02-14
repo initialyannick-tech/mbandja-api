@@ -15,7 +15,7 @@ class EtudiantRepository
      */
     public function index(): AnonymousResourceCollection
     {
-        $etudiants = Etudiant::all();
+        $etudiants = Etudiant::with('inscriptions.classe')->orderBy('id', 'desc')->get();
         return EtudiantResource::collection($etudiants);
     }
 
