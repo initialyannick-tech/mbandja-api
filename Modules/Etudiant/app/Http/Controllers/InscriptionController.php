@@ -55,4 +55,62 @@ class InscriptionController extends CoreController
         }
     }
 
+    /**
+     * Rechercher une inscription
+     *
+     * @param [type] $keyword
+     * @return void
+     */
+    public function search($keyword)
+    {
+        return $this->repository->search($keyword);
+    }
+
+    /**
+     * Afficher une inscription
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function show($id)
+    {
+        return $this->repository->show($id);
+    }
+
+
+    /**
+     * Mise à jour d'une inscription
+     *
+     * @param InscriptionRequest $request
+     * @param [type] $id
+     * @return JsonResponse
+     */
+    public function update(InscriptionRequest $request, $id)
+    {
+        $data = $request->validated();
+        $inscription = $this->repository->update($data, $id);
+        if (!$inscription) {
+            return $this->returnError('Une erreur est survenue lors de la modification de l\'inscription');
+        } else {
+            return $this->returnSuccess('Inscription modifié avec succès', $inscription);
+        }
+    }
+
+
+    /**
+     * Suppression d'une inscription
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function destroy($id)
+    {
+        $inscription = $this->repository->destroy($id);
+        if (!$inscription) {
+            return $this->returnError('Une erreur est survenue lors de la suppression de l\'inscription');
+        } else {
+            return $this->returnSuccess('Inscription supprimé avec succès');
+        }
+    }
+
 }

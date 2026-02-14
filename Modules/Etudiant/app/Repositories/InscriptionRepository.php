@@ -47,4 +47,49 @@ class InscriptionRepository
         }
         return false;
     }
+
+    public function search($keyword)
+    {
+        $inscriptions = Inscription::with(['classe', 'etudiant', 'session'])
+            ->whereHas('classe', function ($query) use ($keyword) {
+                $query->where('libelle', 'like', "%{$keyword}%")
+                    ->orWhere('code', 'like', "%{$keyword}%");
+            })
+            ->orWhereHas('etudiant', function ($query) use ($keyword) {
+                $query->where('nom', 'like', "%{$keyword}%")
+                    ->orWhere('prenom', 'like', "%{$keyword}%")
+                    ->orWhere('telephone', 'like', "%{$keyword}%");
+            })
+            ->orWhere('date_inscription', 'like', "%{$keyword}%")
+            ->orderByDesc('id')
+            ->paginate(10);
+
+        return InscriptionResource::collection($inscriptions);
+    }
+
+
+    public function show($id): InscriptionResource
+    {
+        $inscriptions = Inscription::find($id);
+        return new InscriptionResource($inscriptions);
+    }
+
+    public function update($data, $id)
+    {
+        $inscription = Inscription::find($id);
+        $inscription->fill($data);
+        if ($inscription->save()) {
+            return $inscription;
+        }
+        return false;
+    }
+
+    public function destroy($id)
+    {
+        $inscription = Inscription::find($id);
+        if ($inscription->delete()) {
+            return true;
+        }
+        return false;
+    }
 }
