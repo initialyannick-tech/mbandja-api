@@ -16,6 +16,7 @@ class ClasseRequest extends FormRequest
              'capacite'    =>'nullable|integer|min:1',
              'session_id'  =>'required|exists:sessions,id',
              'cycle_id'    =>'required|exists:cycles,id',
+             'frais_inscription' =>'nullable|numeric|min:0',
              'semestres.*' =>'exists:semestres,id',
         ];
     }
@@ -37,6 +38,7 @@ class ClasseRequest extends FormRequest
             'capacite.integer'  => 'La capacité doit être un nombre entier.',
             'session_id.exists' => 'La session sélectionnée est invalide.',
             'cycle_id.exists'   => 'Le cycle sélectionné est invalide.',
+            'frais_inscription.numeric' => 'Les frais d\'inscription doivent être un montant valide.',
             'semestres.min'     => 'Une classe doit être associée à au moins deux semestres.'
         ];
     }

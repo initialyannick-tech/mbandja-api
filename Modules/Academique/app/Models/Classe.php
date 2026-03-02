@@ -69,8 +69,10 @@ class Classe extends Model
 
     public function semestres()
     {
-        return $this->belongsToMany(Semestre::class, 'classe_has_semestres');
+        return $this->belongsToMany(Semestre::class, 'classe_has_semestres', 'classe_id', 'semestre_id')->withTimestamps();
     }
+
+    
 
     public function unites() { 
         return $this->hasMany(Unite::class); 
