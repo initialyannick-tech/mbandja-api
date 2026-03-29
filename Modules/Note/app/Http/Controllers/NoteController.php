@@ -2,55 +2,116 @@
 
 namespace Modules\Note\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Modules\Core\Http\Controllers\CoreController;
+use Modules\Note\Http\Requests\NoteRequest;
+use Modules\Note\Repositories\NoteRepository;
+use Modules\Note\Transformers\NoteResource;
 
-class NoteController extends Controller
+class NoteController extends CoreController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    protected NoteRepository $noteRepository;
+
+    public function __construct(NoteRepository $noteRepository)
     {
-        return view('note::index');
+        $this->noteRepository = $noteRepository;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Liste notes sans pagination
+     *
+     * @return AnonymousResourceCollection
      */
-    public function create()
-    {
-        return view('note::create');
+    public function list() {
+        return $this->noteRepository->index();
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Liste des notes
+     *
+     * @return AnonymousResourceCollection
      */
-    public function store(Request $request) {}
+    public function index(): AnonymousResourceCollection
+    {
+        return $this->noteRepository->paginate();
+    }
+
 
     /**
-     * Show the specified resource.
+     * Création d'une note
+     *
+     * @param NoteRequest $request
+     * @return JsonResponse
+     */
+    public function store(NoteRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $note = $this->noteRepository->store($data);
+        if(!$note){
+            return $this->returnError('Une erreur est survenue lors de la création d\'une note académique');
+        } else {
+            return $this->returnSuccess('Note académique créé avec succès', $note);
+        }
+    }
+
+
+    /**
+     * Afficher une note
+     *
+     * @param [type] $id
+     * @return NoteResource
      */
     public function show($id)
     {
-        return view('note::show');
+        return $this->noteRepository->show($id);
     }
 
+
     /**
-     * Show the form for editing the specified resource.
+     * Rechercher une note
+     *
+     * @param [type] $keyword
+     * @return AnonymousResourceCollection
      */
-    public function edit($id)
+    public function search($keyword): AnonymousResourceCollection
     {
-        return view('note::edit');
+        return $this->noteRepository->search($keyword);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id) {}
 
     /**
-     * Remove the specified resource from storage.
+     * Mise à jour d'une session
+     *
+     * @param NoteRequest $request
+     * @param [type] $id
+     * @return JsonResponse
      */
-    public function destroy($id) {}
+    public function update(NoteRequest $request, $id): JsonResponse
+    {
+        $data = $request->validated();
+        $note = $this->noteRepository->update($id, $data);
+        if(!$note){
+            return $this->returnError('Une erreur est survenue lors de la mise à jour de la note académique');
+        } else {
+            return $this->returnSuccess('Note académique mis à jour avec succès', $note);
+        }
+    }
+
+
+    /**
+     * Suppression d'une note
+     *
+     * @param [type] $id
+     * @return JsonResponse
+     */
+    public function destroy($id): JsonResponse
+    {
+        $res = $this->noteRepository->delete($id);
+        if(!$res){
+            return $this->returnError('Une erreur est survenue lors de la suppression de la note');
+        } else {
+            return $this->returnSuccess('Note supprimé avec succès');
+        }
+    }
 }

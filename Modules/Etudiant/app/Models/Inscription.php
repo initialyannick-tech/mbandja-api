@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Academique\Models\Classe;
 use Modules\Academique\Models\Session;
+use Modules\Note\Models\Note;
 
 class Inscription extends Model
 {
@@ -99,6 +100,9 @@ class Inscription extends Model
         }
     }
 
-
+    public function notes()
+    {
+        return $this->hasMany(Note::class, 'inscription_id', 'id');
+    }
     
 }

@@ -82,24 +82,24 @@ class SessionController extends CoreController
     /**
      * Mise à jour d'une session
      *
-     * @param ClubRequest $request
+     * @param SessionRequest $request
      * @param [type] $id
      * @return JsonResponse
      */
     public function update(SessionRequest $request, $id): JsonResponse
     {
         $data = $request->validated();
-        $club = $this->sessionRepository->update($id, $data);
-        if(!$club){
+        $sessions = $this->sessionRepository->update($id, $data);
+        if(!$sessions){
             return $this->returnError('Une erreur est survenue lors de la mise à jour de la session académique');
         } else {
-            return $this->returnSuccess('Session académique mis à jour avec succès', $club);
+            return $this->returnSuccess('Session académique mis à jour avec succès', $sessions);
         }
     }
 
 
     /**
-     * Suppression d'un club
+     * Suppression d'une session
      *
      * @param [type] $id
      * @return JsonResponse
@@ -108,9 +108,9 @@ class SessionController extends CoreController
     {
         $res = $this->sessionRepository->delete($id);
         if(!$res){
-            return $this->returnError('Une erreur est survenue lors de la suppression du club');
+            return $this->returnError('Une erreur est survenue lors de la suppression de la session');
         } else {
-            return $this->returnSuccess('Club supprimé avec succès');
+            return $this->returnSuccess('Session supprimé avec succès');
         }
     }
 }

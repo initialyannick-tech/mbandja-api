@@ -5,6 +5,8 @@ namespace Modules\Academique\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
+use Modules\Etudiant\Models\Inscription;
+use Modules\Note\Models\Note;
 
 class Matiere extends Model
 {
@@ -14,8 +16,6 @@ class Matiere extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = ['unite_id', 'code', 'libelle', 'coefficient'];
-
-    
 
 
      protected static function boot()
@@ -38,7 +38,9 @@ class Matiere extends Model
     public function unite() { 
         return $this->belongsTo(Unite::class); 
     }
-    // public function notes() { return $this->hasMany(Note::class); }
+    public function notes() { 
+        return $this->hasMany(Note::class); 
+    }
     // public function vacations() { return $this->hasMany(Vacation::class); }
     
 }

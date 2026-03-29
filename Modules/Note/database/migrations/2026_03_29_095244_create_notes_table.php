@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            
+            $table->foreignId('inscription_id')->constrained('inscriptions')->cascadeOnDelete();
+            $table->foreignId('matiere_id')->constrained('matieres')->cascadeOnDelete();
+            $table->enum('type', ['controle', 'examen', 'devoir'])->default('controle');
+            $table->string('libelle')->nullable(); // ex: CC1, CC2, devoir maison
+            $table->decimal('valeur', 5, 2);
+            $table->string('appreciation')->nullable();
             $table->timestamps();
         });
     }
