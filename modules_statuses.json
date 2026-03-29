@@ -2,5 +2,6 @@
     "Core": true,
     "Admin": true,
     "Academique": true,
-    "Etudiant": true
+    "Etudiant": true,
+    "Note": true
 }
