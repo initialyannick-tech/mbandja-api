@@ -16,7 +16,6 @@ class InscriptionRequest extends FormRequest
             'etudiant_id' => 'required|exists:etudiants,id',
             'session_id' => 'required|exists:sessions,id',
             'date_inscription' => 'required|date',
-            'statut_paiement' => 'nullable|in:impaye,partiel,solde',
         ];
     }
 
@@ -39,7 +38,6 @@ class InscriptionRequest extends FormRequest
             'session_id.exists' => 'La session sélectionnée est invalide.',
             'date_inscription.required' => 'La date d\'inscription est obligatoire.',
             'date_inscription.date' => 'La date d\'inscription doit être une date valide.',
-            'statut_paiement.in' => 'Le statut de paiement doit être : impaye, partiel ou solde.',
         ];
     }
 }
