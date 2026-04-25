@@ -19,7 +19,7 @@ class UniteRessource extends JsonResource
             'credit'  => (float) $this->credit,
             'classe'  => $this->classe,
             'semestre'=>  $this->semestre,
-            'session' => $this->session,
+            'annee' => $this->session,
         ];
     }
 }
