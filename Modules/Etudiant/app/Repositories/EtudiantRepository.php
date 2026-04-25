@@ -4,6 +4,7 @@ namespace Modules\Etudiant\Repositories;
 
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Modules\Etudiant\Models\Etudiant;
+use Modules\Etudiant\Transformers\DetailEtudiantResource;
 use Modules\Etudiant\Transformers\EtudiantResource;
 
 class EtudiantRepository
@@ -68,12 +69,12 @@ class EtudiantRepository
      * Récupérer un étudiant par son ID
      *
      * @param [type] $code
-     * @return EtudiantResource
+     * @return DetailEtudiantResource
      */
-    public function show($code): EtudiantResource
+    public function show($code): DetailEtudiantResource
     {
         $etudiants = Etudiant::where('matricule', $code)->with(['contacts', 'documents'])->first();
-        return EtudiantResource::make($etudiants);
+        return DetailEtudiantResource::make($etudiants);
     }
 
 

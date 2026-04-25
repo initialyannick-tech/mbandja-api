@@ -5,7 +5,7 @@ namespace Modules\Etudiant\Transformers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class EtudiantResource extends JsonResource
+class DetailEtudiantResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -23,6 +23,9 @@ class EtudiantResource extends JsonResource
             "telephone"  => $this->telephone,
             "email"      => $this->email,
             "adresse"    => $this->adresse, 
+            "documents"  => $this->documents,
+            "contacts"   => $this->contacts,
+            "inscriptions" => $this->inscriptions
         ];
 
     }

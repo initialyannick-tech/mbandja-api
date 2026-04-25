@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Modules\Core\Http\Controllers\CoreController;
 use Modules\Etudiant\Http\Requests\EtudiantRequest;
-use Modules\Etudiant\Transformers\EtudiantResource;
+use Modules\Etudiant\Transformers\DetailEtudiantResource;
 use Modules\Etudiant\Repositories\EtudiantRepository;
 
 class EtudiantController extends CoreController
@@ -60,7 +60,7 @@ class EtudiantController extends CoreController
      * Afficher une étudiant
      *
      * @param [type] $code
-     * @return EtudiantResource
+     * @return DetailEtudiantResource
      */
     public function show($code)
     {
