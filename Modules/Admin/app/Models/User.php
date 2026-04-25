@@ -26,8 +26,6 @@ class User extends Authenticatable
         'password_changed',
         'status',
         'role_id',
-        'ligue_id',
-        'club_id',
     ];
 
 
@@ -65,13 +63,4 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id');
     }
 
-    public function ligue()
-    {
-        return $this->belongsTo(Ligue::class, 'ligue_id');
-    }
-
-    public function club()
-    {
-        return $this->belongsTo(Club::class, 'club_id');
-    }
 }
