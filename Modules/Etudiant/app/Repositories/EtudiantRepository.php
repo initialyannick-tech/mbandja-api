@@ -4,6 +4,7 @@ namespace Modules\Etudiant\Repositories;
 
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Modules\Etudiant\Models\Etudiant;
+use Modules\Etudiant\Models\Inscription;
 use Modules\Etudiant\Transformers\DetailEtudiantResource;
 use Modules\Etudiant\Transformers\EtudiantResource;
 
@@ -109,4 +110,5 @@ class EtudiantRepository
         }
         return false;
     }
+
 }

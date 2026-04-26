@@ -113,4 +113,15 @@ class InscriptionController extends CoreController
         }
     }
 
+
+    /**
+     * Etudiant par classe
+     *
+     * @param [type] $classe_id
+     * @return void
+     */
+    public function findByClasse($classe_id) {
+        return $this->repository->getDEtudiantByClasse($classe_id);
+    }
+
 }

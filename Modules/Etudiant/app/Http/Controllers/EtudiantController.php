@@ -114,4 +114,5 @@ class EtudiantController extends CoreController
             return $this->returnSuccess('Etudiant supprimé avec succès');
         }
     }
+
 }

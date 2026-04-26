@@ -92,4 +92,9 @@ class InscriptionRepository
         }
         return false;
     }
+
+    public function getDEtudiantByClasse($classeId)
+    {
+        return Inscription::where('classe_id', $classeId)->get();
+    }
 }

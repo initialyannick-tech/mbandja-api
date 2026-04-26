@@ -23,9 +23,9 @@ class DetailEtudiantResource extends JsonResource
             "telephone"  => $this->telephone,
             "email"      => $this->email,
             "adresse"    => $this->adresse, 
-            "documents"  => $this->documents,
-            "contacts"   => $this->contacts,
-            "inscriptions" => $this->inscriptions
+            "inscriptions" => $this->inscriptions,
+            "contacts" => $this->contacts,
+            "documents" => $this->documents
         ];
 
     }

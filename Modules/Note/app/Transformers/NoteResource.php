@@ -78,7 +78,12 @@ class NoteResource extends JsonResource
                 'nom' => $this->inscription?->etudiant?->nom,
                 'prenom' => $this->inscription?->etudiant?->prenom,
                 'email' => $this->inscription?->etudiant?->email,
-                'classe_id' => $this->inscription?->classe_id,
+                'classe' =>[
+                     'id' => $this->inscription->classe?->id,
+                     'code' => $this->inscription->classe?->code,
+                     'libelle' => $this->inscription->classe?->libelle,
+                     'capacite' => $this->inscription->classe?->capacite,
+                ],
             ],
             'moyenne_matiere' => $moyenneMatiere ? round($moyenneMatiere, 2) : null,
             'moyenne_generale' => $moyenneGenerale ? round($moyenneGenerale, 2) : null,

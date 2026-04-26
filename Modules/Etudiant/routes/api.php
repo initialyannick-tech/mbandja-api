@@ -6,7 +6,7 @@ use Modules\Etudiant\Http\Controllers\DocumentController;
 use Modules\Etudiant\Http\Controllers\EtudiantController;
 use Modules\Etudiant\Http\Controllers\InscriptionController;
 use Modules\Etudiant\Http\Controllers\PaiementController;
-use Modules\Etudiant\Http\Controllers\PayementController;
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -42,6 +42,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('inscription')->group(function() {
         Route::post('/', [InscriptionController::class, 'store'])->name('inscriptions.store');
         Route::get('search/{keyword}', [InscriptionController::class, 'search'])->name('inscriptions.search');
+        Route::get('etudiant/{classe_id}', [InscriptionController::class, 'findByClasse'])->name('inscriptions.findByClasse');
         Route::get('/', [InscriptionController::class, 'index'])->name('inscriptions.index');
         Route::get('/liste', [InscriptionController::class, 'list'])->name('inscriptions.liste');
         Route::get('/{inscription}', [InscriptionController::class, 'show'])->name('inscriptions.show');
@@ -49,7 +50,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/{inscription}', [InscriptionController::class, 'destroy'])->name('inscriptions.destroy');
     });
 
-     Route::prefix('paiement')->group(function() {
+    Route::prefix('paiement')->group(function() {
         Route::post('/', [PaiementController::class, 'store'])->name('paiements.store');
         Route::get('search/{keyword}', [PaiementController::class, 'search'])->name('paiements.search');
         Route::get('/', [PaiementController::class, 'index'])->name('paiements.index');

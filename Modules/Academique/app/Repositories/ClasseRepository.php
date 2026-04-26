@@ -85,11 +85,15 @@ class ClasseRepository
     public function update($id, $data)
     {
         $classe = Classe::find($id);
-        $classe->fill($data);
-        if($classe->save()){
-            return $classe;
+        if (!$classe) {
+            return false;
         }
-        return false;
+        $classe->fill($data);
+        $classe->save();
+        if (isset($data['semestres'])) {
+            $classe->semestres()->sync($data['semestres']);
+        }
+        return $classe->load(['semestres', 'cycle', 'session']);
     }
 
     /**

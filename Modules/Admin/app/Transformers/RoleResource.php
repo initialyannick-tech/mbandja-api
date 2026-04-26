@@ -17,6 +17,7 @@ class RoleResource extends JsonResource
             'libelle' => $this->libelle,
             'code' => $this->code,
             'description' => $this->description,
+            'permissions' => $this->permissions
         ];
     }
 }

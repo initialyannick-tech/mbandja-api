@@ -11,7 +11,7 @@ class RoleRepository
 {
     public function paginate()
     {
-        $roles = Role::paginate(12);
+        $roles = Role::orderBy('id', 'desc')->with(['permissions'])-> paginate(10);
         return RoleResource::collection($roles);
     }
    
