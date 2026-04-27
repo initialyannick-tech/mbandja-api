@@ -20,6 +20,7 @@ class UniteRessource extends JsonResource
             'classe'  => $this->classe,
             'semestre'=>  $this->semestre,
             'annee' => $this->session,
+            "matieres" => $this->matieres
         ];
     }
 }
