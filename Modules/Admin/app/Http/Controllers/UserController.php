@@ -21,6 +21,16 @@ class UserController extends CoreController
 
 
     /**
+     * Liste utilisateur sans pagination
+     *
+     * @return AnonymousResourceCollection
+     */
+    public function list() {
+        return $this->repository->index();
+    }
+
+
+    /**
      * Liste paginée des utilisateurs
      *
      * @return AnonymousResourceCollection

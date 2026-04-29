@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Repositories;
 
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Mail;
 use Modules\Admin\Models\User;
 use Modules\Admin\Transformers\AuthResource;
@@ -11,7 +12,19 @@ use Modules\Admin\Transformers\UserResource;
 
 class UserRepository
 {
-     public function paginate()
+
+   /**
+     * Liste des users sans pagination
+     *
+     * @return AnonymousResourceCollection
+     */
+    public function index(): AnonymousResourceCollection
+    {
+        $users =  User::orderBy('id', 'desc')->with(['role'])->get();
+        return UserResource::collection($users);
+    }
+    
+    public function paginate()
     {
         $users =  User::orderBy('id', 'desc')->with(['role'])->paginate(10);
         return UserResource::collection($users);

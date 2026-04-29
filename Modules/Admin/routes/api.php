@@ -26,6 +26,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('userList')->group(function() {
         Route::get('/', [UserController::class, 'paginate'])->name('user.index');
         Route::get('/{user}', [UserController::class, 'show'])->name('user.show');
+        Route::get('/liste', [UserController::class, 'list'])->name('users.liste');
         Route::post('/', [UserController::class, 'store'])->name('user.store');
         Route::put('/{user}', [UserController::class, 'update'])->name('user.update');
     });
