@@ -8,7 +8,6 @@ use Modules\Etudiant\Transformers\InscriptionResource;
 
 class InscriptionRepository
 {
-    
 
     /**
      * Liste des Inscriptions sans pagination

@@ -16,7 +16,7 @@ class InscriptionResource extends JsonResource
             'id' => $this->id,
             'classe' => $this->classe,
             'etudiant' => $this->etudiant,
-            'session' => $this->session,
+            'annee' => $this->session,
             'date_inscription' => $this->date_inscription,
             'statut_paiement' => $this->statut_paiement,
             'paiements' => $this->paiements,
