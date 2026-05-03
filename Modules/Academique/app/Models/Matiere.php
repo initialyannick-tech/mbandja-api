@@ -5,7 +5,6 @@ namespace Modules\Academique\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
-use Modules\Etudiant\Models\Inscription;
 use Modules\Note\Models\Note;
 
 class Matiere extends Model
@@ -40,6 +39,18 @@ class Matiere extends Model
     }
     public function notes() { 
         return $this->hasMany(Note::class); 
+    }
+
+     /*
+    |--------------------------------------------------------------------------
+    | RELATIONS
+    |--------------------------------------------------------------------------
+    */
+
+    // Matière → Classes
+    public function classes()
+    {
+        return $this->belongsToMany(Classe::class, 'classe_matieres')->withPivot('classe_id', 'matiere_id')->withTimestamps();
     }
     // public function vacations() { return $this->hasMany(Vacation::class); }
     

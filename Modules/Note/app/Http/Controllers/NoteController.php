@@ -3,9 +3,13 @@
 namespace Modules\Note\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Modules\Academique\Models\Classe;
+use Modules\Academique\Models\Matiere;
 use Modules\Core\Http\Controllers\CoreController;
 use Modules\Note\Http\Requests\NoteRequest;
+use Modules\Note\Models\Note;
 use Modules\Note\Repositories\NoteRepository;
 use Modules\Note\Transformers\NoteResource;
 
@@ -30,11 +34,51 @@ class NoteController extends CoreController
     /**
      * Liste des notes
      *
-     * @return AnonymousResourceCollection
      */
-    public function index(): AnonymousResourceCollection
+    public function index(Request $request)
     {
-        return $this->noteRepository->paginate();
+        $inscriptionId = $request->query('inscription_id');
+        $classeId = $request->query('classe_id');
+        if (!$inscriptionId || !$classeId) {
+            return response()->json([
+                'message' => 'classe_id et inscription_id requis'
+            ], 422);
+        }
+        // 1. récupérer toutes les matières de la classe
+        $matieres = Classe::with('matieres')->find($classeId)?->matieres ?? collect();
+
+        //2. récupérer les notes de l'étudiant
+        $notes = Note::where('inscription_id', $inscriptionId)->get()->groupBy('matiere_id');
+        $result = [];
+        foreach ($matieres as $matiere) {
+            $matiereNotes = $notes->get($matiere->id);
+            $item = [
+                'matiere_id' => $matiere->id,
+                'matiere' => $matiere->libelle,
+                'coefficient' => $matiere->coefficient,
+                'CC1' => null,
+                'CC2' => null,
+                'EXAM' => null,
+            ];
+            if ($matiereNotes) {
+                foreach ($matiereNotes as $note) {
+
+                    if ($note->libelle === 'CC1') {
+                        $item['CC1'] = (float) $note->valeur;
+                    }
+                    if ($note->libelle === 'CC2') {
+                        $item['CC2'] = (float) $note->valeur;
+                    }
+                    if ($note->libelle === 'EXAM') {
+                        $item['EXAM'] = (float) $note->valeur;
+                    }
+                }
+            }
+            $result[] = $item;
+        }
+        return response()->json([
+            'data' => $result
+        ]);
     }
 
 

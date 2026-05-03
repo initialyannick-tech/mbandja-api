@@ -110,4 +110,25 @@ class ClasseRepository
         }
         return false;
     }
+
+
+    /**
+     * Assigner une ou plusieurs matières à une classe
+     *
+     * @param array $data
+     * @return Classe|false
+     */
+    public function assigneMatieres(array $data): Classe|false
+    {
+        $classe = Classe::find($data['classe_id']);
+        if (!$classe) {
+            return false;
+        }
+        $matieres = $data['matieres'] ?? [];
+        if (empty($matieres)) {
+            return false;
+        }
+        $classe->matieres()->sync($matieres);
+        return $classe->load('matieres');
+    }
 }

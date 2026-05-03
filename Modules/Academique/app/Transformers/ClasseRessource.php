@@ -20,7 +20,17 @@ class ClasseRessource extends JsonResource
             'session'  => $this->session,
             'cycle'    => $this->cycle,
             'semestres' => $this->semestres,
-            'frais_inscription' => $this->frais_inscription
+            'frais_inscription' => $this->frais_inscription,
+            'matieres' => $this->matieres->map(function ($matiere) {
+                return [
+                    'id' => $matiere->id,
+                    'code' => $matiere->code,
+                    'libelle' => $matiere->libelle,
+                    'unite' => $matiere->unite,
+                    'coefficient' => $matiere->coefficient
+                ];
+            }),
+            'inscriptions' => $this->inscriptions
         ];
     }
 }

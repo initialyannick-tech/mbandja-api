@@ -19,6 +19,7 @@ class AcademiqueDatabaseSeeder extends Seeder
             ClasseHasSemestreSeeder::class,
             UniteSeeder::class,
             MatiereSeeder::class,
+            EnseignantSeeder::class
          ]);
     }
 }

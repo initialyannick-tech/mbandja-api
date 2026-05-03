@@ -3,7 +3,9 @@
 namespace Modules\Academique\Http\Controllers;
 
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Modules\Academique\Http\Requests\ClasseMatiereRequest;
 use Modules\Academique\Http\Requests\ClasseRequest;
+use Modules\Academique\Models\Classe;
 use Modules\Academique\Repositories\ClasseRepository;
 use Modules\Core\Http\Controllers\CoreController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -112,5 +114,57 @@ class ClasseController extends CoreController
         } else {
             return $this->returnSuccess('Classe supprimé avec succès');
         }
+    }
+
+
+    /**
+     * Assigner matières à une classe
+     *
+     * @param ClasseMatiereRequest $request
+     * @return JsonResponse
+     */
+    public function assigne(ClasseMatiereRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $assigne = $this->classeRepository->assigneMatieres($data);
+        if(!$assigne){
+            return $this->returnError('Une erreur est survenue lors de la création d\'une assignation');
+        } else {
+            return $this->returnSuccess('Assignation créé avec succès', $assigne);
+        }
+    }
+
+    public function matieres($id)
+    {
+        $classe = Classe::with('matieres')->find($id);
+
+        if (!$classe) {
+            return response()->json([
+                'message' => 'Classe introuvable'
+            ], 404);
+        }
+
+        return response()->json([
+            'data' => $classe->matieres
+        ]);
+    }
+
+    public function inscriptions($id)
+    {
+        $classe = Classe::find($id);
+
+        if (!$classe) {
+            return response()->json([
+                'message' => 'Classe introuvable'
+            ], 404);
+        }
+
+        $inscriptions = $classe->inscriptions()
+            ->with('etudiant')
+            ->get();
+
+        return response()->json([
+            'data' => $inscriptions
+        ]);
     }
 }

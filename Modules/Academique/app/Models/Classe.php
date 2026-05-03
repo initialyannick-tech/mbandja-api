@@ -5,6 +5,7 @@ namespace Modules\Academique\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
+use Modules\Etudiant\Models\Inscription;
 
 class Classe extends Model
 {
@@ -72,14 +73,32 @@ class Classe extends Model
         return $this->belongsToMany(Semestre::class, 'classe_has_semestres', 'classe_id', 'semestre_id')->withTimestamps();
     }
 
-    
-
     public function unites() { 
         return $this->hasMany(Unite::class); 
     }
-   
 
 
-   
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS
+    |--------------------------------------------------------------------------
+    */
+
+    // Classe → Matières
+    public function matieres()
+    {
+        return $this->belongsToMany(Matiere::class, 'classe_matieres')->withPivot('classe_id', 'matiere_id')->withTimestamps();
+    }
+
+    // Classe → Enseignants
+    public function enseignants()
+    {
+        return $this->belongsToMany(Enseignant::class, 'classe_enseignants')->withTimestamps();
+    }
+
+    public function inscriptions()
+    {
+        return $this->hasMany(Inscription::class);
+    }
     
 }

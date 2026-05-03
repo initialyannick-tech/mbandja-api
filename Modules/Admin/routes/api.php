@@ -9,7 +9,6 @@ use Modules\Admin\Http\Controllers\UserController;
 
 Route::post('auth/login', [AuthController::class, 'login'])->name('auth.login');
 
-
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::put('auth/change-password', [UserController::class, 'updatePassword'])->name('user.update.password');

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Academique\Http\Controllers\ClasseController;
 use Modules\Academique\Http\Controllers\CycleController;
+use Modules\Academique\Http\Controllers\EnseigantController;
 use Modules\Academique\Http\Controllers\MatiereController;
 use Modules\Academique\Http\Controllers\SemestreController;
 use Modules\Academique\Http\Controllers\SessionController;
@@ -49,7 +50,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/{classes}', [ClasseController::class, 'show'])->name('classes.show');
         Route::put('/{classes}', [ClasseController::class, 'update'])->name('classes.update');
         Route::delete('/{classes}', [ClasseController::class, 'destroy'])->name('classes.destroy');
+        Route::post('/assigne/matiere', [ClasseController::class, 'assigne'])->name('assigne.matiere.store');
     });
+    Route::get('classes/{id}/matieres', [ClasseController::class, 'matieres']);
+    Route::get('classes/{id}/inscriptions', [ClasseController::class, 'inscriptions']);
 
     Route::prefix('unites')->group(function() {
         Route::post('/', [UniteController::class, 'store'])->name('unites.store');
@@ -71,5 +75,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/{matieres}', [MatiereController::class, 'destroy'])->name('matieres.destroy');
     });
     
+
+    Route::prefix('enseignant')->group(function() {
+        Route::post('/', [EnseigantController::class, 'store'])->name('enseignants.store');
+        Route::get('search/{keyword}', [EnseigantController::class, 'search'])->name('enseignants.search');
+        Route::get('/', [EnseigantController::class, 'index'])->name('enseignants.index');
+        Route::get('/liste', [EnseigantController::class, 'list'])->name('enseignants.liste');
+        Route::get('/{enseignant}', [EnseigantController::class, 'show'])->name('enseignants.show');
+        Route::put('/{enseignant}', [EnseigantController::class, 'update'])->name('enseignants.update');
+        Route::delete('/{enseignant}', [EnseigantController::class, 'destroy'])->name('enseignants.destroy');
+    });
 });
 
